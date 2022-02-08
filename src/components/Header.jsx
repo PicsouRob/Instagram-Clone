@@ -3,11 +3,13 @@ import { Link, useNavigate } from 'react-router-dom'
 
 import FirebaseContext from '../context/firebase';
 import UserContext from '../context/user';
+import { useUser } from '../hooks/useUser';
 
 function Header() {
     const navigate = useNavigate();
     const { firebaseApp } = useContext(FirebaseContext);
-    const { user } = useContext(UserContext);
+    const { user: loggedInUser } = useContext(UserContext);
+    const { user } = useUser(loggedInUser.uid);
 
     return <div class="h-16 border-b border-gray-primary bg-white mb-4">
         <div class="container mx-auto max-w-screen-lg px-6 flex items-center justify-between h-full">
@@ -61,8 +63,8 @@ function Header() {
                                 />
                             </svg>
                         </button>
-                        <Link to={`/p/${user.displayName}`} class="w-8 h-8 cursor-pointer">
-                            <img alt="" src={`/images/avatars/${user.displayName}.jpg`} class="rounded-full" />
+                        <Link to={`/p/${user.username}`} class="w-8 h-8 cursor-pointer">
+                            <img alt="" src={`/images/avatars/${user.username}.jpg`} class="rounded-full" />
                         </Link>
                     </div>
                 ) : (

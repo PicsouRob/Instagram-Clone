@@ -615,11 +615,11 @@ Ensure the default browser behavior of the `hidden` attribute.
 .w-44 {
   width: 11rem;
 }
-.w-16 {
-  width: 4rem;
-}
 .w-10 {
   width: 2.5rem;
+}
+.w-16 {
+  width: 4rem;
 }
 .max-w-screen-lg {
   max-width: 1024px;

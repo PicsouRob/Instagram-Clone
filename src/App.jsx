@@ -24,7 +24,7 @@ const App = () => {
           <Routes>
             <Route exact path="/"
               element={<ProtectedRoute user={user}>
-                <DashBoard />
+                <DashBoard user={user} />
               </ProtectedRoute>}
             />
             <Route path="/login"

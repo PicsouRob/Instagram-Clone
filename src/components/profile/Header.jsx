@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
 import Skeleton from 'react-loading-skeleton';
 
 import { isUserFallowingProfile, toggleFallow } from '../../services/firebase';
 import { useUser } from '../../hooks/useUser';
 import HeaderAction from './HeaderAction';
+import UserContext from '../../context/user';
 
 function Header(props) {
     const { profile, fallowersCount, fallowingCount,
@@ -14,7 +15,8 @@ function Header(props) {
         userId: userProfileId, fullName,
         emailAddress
     } = profile;
-    const { user } = useUser();
+    const { user: loggedInUser } = useContext(UserContext);
+    const { user } = useUser(loggedInUser.uid);
     const [isFallowingProfile, setIsFallowingProfile] = useState(null);
     const activeFallowBtn = user.username && user.username !== profileUsername;
 
