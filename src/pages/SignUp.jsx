@@ -24,7 +24,6 @@ function SignUp() {
         event.preventDefault();
 
         const usernameExist = await isUsernameExist(username);
-        console.log('usernameExist: ', usernameExist);
         if (!usernameExist) {
             try {
                 const createNewUser = await firebaseApp.auth()

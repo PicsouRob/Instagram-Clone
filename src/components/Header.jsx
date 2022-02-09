@@ -1,21 +1,44 @@
-import React, { useContext } from 'react';
-import { Link, useNavigate } from 'react-router-dom'
+import React, { useContext, useRef, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
 import FirebaseContext from '../context/firebase';
 import UserContext from '../context/user';
 import { useUser } from '../hooks/useUser';
+import { loggedInUserPost } from '../services/firebase';
+import Modal from './post/Modal';
 
 function Header() {
     const navigate = useNavigate();
     const { firebaseApp } = useContext(FirebaseContext);
     const { user: loggedInUser } = useContext(UserContext);
     const { user } = useUser(loggedInUser.uid);
+    const [url, setUrl] = useState(null);
+    const [isShow, setIsShow] = useState(false);
+    const postRef = useRef(null);
 
-    return <div class="h-16 border-b border-gray-primary bg-white mb-4">
+    const types = ["image/png", "image/jpeg"];
+
+    const handlePost = async (event) => {
+        const selected = event.target.files[0];
+        if (types.includes(selected.type)) {
+            await loggedInUserPost(selected, setUrl, user.userId);
+            setIsShow(true);
+        }
+    }
+
+    const handlePostRef = () => {
+        postRef.current.click();
+    }
+
+    return <div class=" relative h-16 border-b border-gray-primary bg-white mb-4">
         <div class="container mx-auto max-w-screen-lg px-6 flex items-center justify-between h-full">
             <Link to="/">
                 <img alt="" src="/images/logo.png" class="h-7" />
             </Link>
+            {isShow && (<Modal url={url} user={user} setIsShow={setIsShow} setUrl={setUrl} />)}
+            <form class="hidden">
+                <input type="file" ref={postRef} onChange={handlePost} />
+            </form>
             <div class="flex items-center justify-between text-gray-700 text-center">
                 {user ? (
                     <div class="flex items-center gap-x-5">
@@ -29,11 +52,13 @@ function Header() {
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                             </svg>
                         </Link>
-                        <Link to="/" class="border border-gray-base rounded">
+                        <div class="border border-gray-base rounded cursor-pointer"
+                            onClick={() => handlePostRef()}
+                        >
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
                             </svg>
-                        </Link>
+                        </div>
                         <button
                             type="button"
                             title="Sign Out"

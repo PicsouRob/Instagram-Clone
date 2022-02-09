@@ -444,6 +444,9 @@ Ensure the default browser behavior of the `hidden` attribute.
     max-width: 1536px;
   }
 }
+.fixed {
+  position: fixed;
+}
 .absolute {
   position: absolute;
 }
@@ -459,11 +462,17 @@ Ensure the default browser behavior of the `hidden` attribute.
 .right-0 {
   right: 0px;
 }
+.left-0 {
+  left: 0px;
+}
 .top-1\/2 {
   top: 50%;
 }
 .left-1\/2 {
   left: 50%;
+}
+.z-40 {
+  z-index: 40;
 }
 .col-span-2 {
   grid-column: span 2 / span 2;
@@ -552,6 +561,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 .h-8 {
   height: 2rem;
 }
+.h-\[450px\] {
+  height: 450px;
+}
 .h-2 {
   height: 0.5rem;
 }
@@ -560,6 +572,15 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .h-5 {
   height: 1.25rem;
+}
+.h-auto {
+  height: auto;
+}
+.h-\[400px\] {
+  height: 400px;
+}
+.h-32 {
+  height: 8rem;
 }
 .h-24 {
   height: 6rem;
@@ -606,6 +627,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 .w-5 {
   width: 1.25rem;
 }
+.w-4 {
+  width: 1rem;
+}
 .w-24 {
   width: 6rem;
 }
@@ -627,6 +651,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 .max-w-screen-md {
   max-width: 768px;
 }
+.flex-1 {
+  flex: 1 1 0%;
+}
 .-translate-x-1\/2 {
   --tw-translate-x: -50%;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
@@ -645,8 +672,14 @@ Ensure the default browser behavior of the `hidden` attribute.
   -webkit-user-select: none;
           user-select: none;
 }
+.resize {
+  resize: both;
+}
 .grid-cols-1 {
   grid-template-columns: repeat(1, minmax(0, 1fr));
+}
+.grid-cols-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 .grid-cols-3 {
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -705,6 +738,19 @@ Ensure the default browser behavior of the `hidden` attribute.
 .gap-y-2 {
   row-gap: 0.5rem;
 }
+.space-y-3 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-y-reverse: 0;
+  margin-top: calc(0.75rem * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(0.75rem * var(--tw-space-y-reverse));
+}
+.space-x-3 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-x-reverse: 0;
+  margin-right: calc(0.75rem * var(--tw-space-x-reverse));
+  margin-left: calc(0.75rem * calc(1 - var(--tw-space-x-reverse)));
+}
+.overflow-scroll {
+  overflow: scroll;
+}
 .rounded {
   border-radius: 0.25rem;
 }
@@ -747,14 +793,23 @@ Ensure the default browser behavior of the `hidden` attribute.
   --tw-bg-opacity: 1;
   background-color: rgb(250 250 250 / var(--tw-bg-opacity));
 }
+.bg-\[rgba\(0\2c 0\2c 0\2c 0\.5\)\] {
+  background-color: rgba(0,0,0,0.5);
+}
 .fill-red {
   fill: #ed4956;
+}
+.object-cover {
+  object-fit: cover;
 }
 .p-4 {
   padding: 1rem;
 }
 .p-2 {
   padding: 0.5rem;
+}
+.p-3 {
+  padding: 0.75rem;
 }
 .px-6 {
   padding-left: 1.5rem;
@@ -819,6 +874,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 .pb-3 {
   padding-bottom: 0.75rem;
 }
+.pb-10 {
+  padding-bottom: 2.5rem;
+}
 .text-center {
   text-align: center;
 }
@@ -876,6 +934,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   --tw-text-opacity: 1;
   color: rgb(51 51 51 / var(--tw-text-opacity));
 }
+.text-gray-primary {
+  --tw-text-opacity: 1;
+  color: rgb(219 219 219 / var(--tw-text-opacity));
+}
 .opacity-80 {
   opacity: 0.8;
 }
@@ -886,6 +948,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   --tw-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
   --tw-shadow-colored: 0 1px 2px 0 var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+.outline-none {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
 }
 .hover\:underline:hover {
   text-decoration-line: underline;

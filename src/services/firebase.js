@@ -123,3 +123,16 @@ export async function toggleFallow(isFallowingProfile,
     await updateLoggedInUserFallowing(loggedInUserDocId, profileUserId, isFallowingProfile);
     await updateFallowedUserFallowers(profileDocId, loggedInUserId, isFallowingProfile);
 }
+
+export async function loggedInUserPost(file, setUrl, userId) {
+    const storageRef = await firebaseApp.storage().ref(file.name);
+
+    storageRef.put(file).on('state_changed', (snap) => {
+        console.log(snap);
+    }, (err) => {
+        console.log(err);
+    }, async () => {
+        const url = await storageRef.getDownloadURL();
+        setUrl(url);
+    });
+}

@@ -1,0 +1,110 @@
+import React, { useState } from 'react';
+import { motion } from 'framer-motion';
+import PropTypes from 'prop-types';
+import Skeleton from 'react-loading-skeleton';
+import { firebaseApp } from '../../lib/firebase';
+
+function Modal({ url, user, setIsShow, setUrl }) {
+  const [value, setValue] = useState('');
+
+  const handleSubmit = async () => {
+    await firebaseApp.firestore().collection('photos')
+      .add({
+        caption: value,
+        likes: [],
+        comments: [],
+        userId: user.userId,
+        imageSrc: url,
+        dateCreated: Date.now(),
+        userLatitude: '',
+        userLongitude: '',
+        photoId: ''
+      });
+
+    setIsShow(false);
+    setUrl(null);
+  }
+
+  const handleCancle = async () => {
+    setIsShow(false);
+  }
+
+  return <div
+    class="fixed top-0 left-0 right-0 bottom-0 bg-[rgba(0,0,0,0.5)] z-40 w-full grid place-items-center px-0 md:px-6"
+  >
+    <motion.div
+      class="bg-white max-w-screen-lg rounded h-auto sha"
+      initial={{ y: "-100vh" }}
+      animate={{ y: 0 }}
+    >
+      <div class="flex items-center justify-between p-2">
+        <button class="px-6 text-red-primary font-bold text-sm"
+          onClick={handleCancle}
+        >
+          Cancle
+        </button>
+        <p class="font-bold  text-[#333333]">Create a new post</p>
+        <button class="px-6 text-blue-medium font-bold text-sm"
+          onClick={handleSubmit}
+        >
+          Share
+        </button>
+      </div>
+      <div class="grid grid-cols-2 h-[400px]">
+        <div class="flex-1 h-full">
+          <hr class="text-gray-primary" />
+          {url ? (
+            <img alt="" src={url}
+              class="h-full object-cover"
+            />
+          ) : (<Skeleton count={1} height={400} class="w-full" />)}
+        </div>
+        <div class="relative overflow-scroll text-[#333333] border border-gray-primary">
+          <div class="p-4 space-y-3">
+            <div class="flex items-center gap-x-3">
+              <img alt="" src={`/images/avatars/${user.username}.jpg`}
+                class="w-8 h-8 rounded-full"
+              />
+              <p class="font-bold text-sm">{user.username}</p>
+            </div>
+            <textarea type="texterea" class="h-32 w-full outline-none resize pb-10 "
+              placeholder="Write a description"
+              onChange={(e) => setValue(e.target.value)}
+              multiligne
+            />
+          </div>
+          <div class="absolute bottom-0 w-full">
+            <div class="border-t border-gray-primary flex items-center justify-between p-3">
+              <p class="text-sm">Add location</p>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+              </svg>
+            </div>
+            <div class="border-t border-gray-primary flex items-center justify-between p-3">
+              <p class="text-sm">Accessibility</p>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </div>
+            <div class="border-t border-gray-primary flex items-center justify-between p-3">
+              <p class="text-sm">Advanced settings </p>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </motion.div>
+  </div>;
+}
+
+Modal.propTypes = {
+  user: PropTypes.object.isRequired,
+  url: PropTypes.string.isRequired,
+  setIsShow: PropTypes.object.isRequired,
+  setUrl: PropTypes.object.isRequired
+}
+
+export default Modal;

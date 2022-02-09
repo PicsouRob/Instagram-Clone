@@ -30,8 +30,8 @@ function Login() {
 
     return (
         <div class="container flex items-center mx-auto max-w-screen-md min-h-screen px-6 md:px-0">
-            <div class="hidden md:block w-3/5">
-                <img alt="" src="/images/iphone-with-profile.jpg" />
+            <div class="hidden md:block w-3/5 h-full">
+                <img alt="" src="/images/iphone-with-profile.jpg" class="h-[450px]" />
             </div>
             <div class="flex flex-col w-full md:w-2/5 gap-y-4">
                 <div class="flex justify-center items-center flex-col w-full bg-white p-4 border border-gray-primary pb-6">
