@@ -7,7 +7,7 @@ function HeaderAction(props) {
     } = props;
 
     return <div class="flex items-center justify-between">
-        <h3 class="text-xl text-[#333333]">{profileUsername}</h3>
+        <h3 class="text-xl md:text-2xl text-[#333333]">{profileUsername}</h3>
         <div class="">
             {activeFallowBtn && (
                 <button class="bg-blue-medium px-3 shadow-sm font-bold text-white text-xs py-2 rounded w-auto"

@@ -29,7 +29,9 @@ module.exports = {
   },
   variants: {
     extend: {
-      display: ['group-hover']
+      display: ['group-hover'],
+      backgroundColor: ['responsive', 'hover', 'focus'],
+      borderColor: ['responsive', 'hover', 'focus', 'focus-within'],
     }
   }
 }

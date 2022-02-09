@@ -2,10 +2,13 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import PropTypes from 'prop-types';
 import Skeleton from 'react-loading-skeleton';
+
 import { firebaseApp } from '../../lib/firebase';
+import CanclePost from './CanclePost.jsx';
 
 function Modal({ url, user, setIsShow, setUrl }) {
   const [value, setValue] = useState('');
+  const [cancle, setCancle] = useState(false);
 
   const handleSubmit = async () => {
     await firebaseApp.firestore().collection('photos')
@@ -25,21 +28,27 @@ function Modal({ url, user, setIsShow, setUrl }) {
     setUrl(null);
   }
 
-  const handleCancle = async () => {
-    setIsShow(false);
-  }
-
   return <div
     class="fixed top-0 left-0 right-0 bottom-0 bg-[rgba(0,0,0,0.5)] z-40 w-full grid place-items-center px-0 md:px-6"
   >
+    <div class="absolute top-3 right-6 text-white cursor-pointer "
+      onClick={() => setCancle(!cancle)}
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </div>
+    {cancle && (
+      <CanclePost setCancle={setCancle} url={url} setUrl={setUrl} setIsShow={setIsShow} />
+    )}
     <motion.div
-      class="bg-white max-w-screen-lg rounded h-auto sha"
+      class="bg-white max-w-screen-lg rounded h-auto shadow"
       initial={{ y: "-100vh" }}
       animate={{ y: 0 }}
     >
       <div class="flex items-center justify-between p-2">
         <button class="px-6 text-red-primary font-bold text-sm"
-          onClick={handleCancle}
+          onClick={() => setCancle(!cancle)}
         >
           Cancle
         </button>
@@ -70,7 +79,7 @@ function Modal({ url, user, setIsShow, setUrl }) {
             <textarea type="texterea" class="h-32 w-full outline-none resize pb-10 "
               placeholder="Write a description"
               onChange={(e) => setValue(e.target.value)}
-              multiligne
+              multiligne="true"
             />
           </div>
           <div class="absolute bottom-0 w-full">
@@ -103,8 +112,8 @@ function Modal({ url, user, setIsShow, setUrl }) {
 Modal.propTypes = {
   user: PropTypes.object.isRequired,
   url: PropTypes.string.isRequired,
-  setIsShow: PropTypes.object.isRequired,
-  setUrl: PropTypes.object.isRequired
+  setIsShow: PropTypes.func.isRequired,
+  setUrl: PropTypes.func.isRequired
 }
 
 export default Modal;
