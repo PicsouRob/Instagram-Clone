@@ -13,6 +13,10 @@ const SignUp = lazy(() => import('./pages/SignUp'));
 const DashBoard = lazy(() => import('./pages/DashBoard'));
 const Profile = lazy(() => import('./pages/Profile'));
 const NotFound = lazy(() => import('./pages/Not-found'));
+const Explore = lazy(() => import('./pages/Explore'));
+const ExploreAll = lazy(() => import('./pages/ExploreAll'));
+const Message = lazy(() => import('./pages/Message'));
+const EditAccount = lazy(() => import('./pages/EditAccount'));
 
 const App = () => {
   const { user } = useAuthListener();
@@ -38,6 +42,10 @@ const App = () => {
               </IsUserLoggedIn>}
             />
             <Route path="/p/:username" element={<Profile />} />
+            <Route path="/direct/inbox" element={<Message />} />
+            <Route path="/explore" element={<Explore />} />
+            <Route path="/explore/people" element={<ExploreAll />} />
+            <Route path="/accounts/edit" element={<EditAccount />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Suspense>

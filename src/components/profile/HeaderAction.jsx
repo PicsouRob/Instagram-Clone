@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 function HeaderAction(props) {
     const { activeFallowBtn, isFallowingProfile,
@@ -9,12 +10,18 @@ function HeaderAction(props) {
     return <div class="flex items-center justify-between">
         <h3 class="text-xl md:text-2xl text-[#333333]">{profileUsername}</h3>
         <div class="">
-            {activeFallowBtn && (
+            {activeFallowBtn ? (
                 <button class="bg-blue-medium px-3 shadow-sm font-bold text-white text-xs py-2 rounded w-auto"
                     onClick={handleFallowUser}
                 >
                     {isFallowingProfile ? 'Unfallow' : "Fallow"}
                 </button>
+            ) : (
+                <Link to={`/accounts/edit`}
+                    class="border rounded-md border-[#262626] px-3 shadow-sm font-bold text-[#262626] text-xs py-2 w-auto"
+                >
+                    Edit profile
+                </Link>
             )}
         </div>
         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 cursor-pointer text-[#333333]" fill="none" viewBox="0 0 24 24" stroke="currentColor">

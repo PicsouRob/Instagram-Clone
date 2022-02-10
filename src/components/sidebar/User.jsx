@@ -7,11 +7,11 @@ import Skeleton from 'react-loading-skeleton';
 
 function User({ username, fullName }) {
     return (
-        <div>
+        <div class="w-full">
             {!username || !fullName ? (
-                <Skeleton count={1} height={61} />
+                <Skeleton count={1} height={21} />
             ) : (
-                <Link to={`/p/${username}`} class="flex gap-4 mb-6 items-center">
+                <Link to={`/p/${username}`} class="flex gap-4 mb-6 items-center w-full pr-6">
                     <div class="flex items-center justify-between">
                         <img alt="" src="/images/avatars/karl.jpg"
                             class="rounded-full w-16 h-16 flex"
@@ -30,7 +30,7 @@ function User({ username, fullName }) {
 
 User.propTypes = {
     username: PropTypes.string.isRequired,
-    fullName: PropTypes.string.isRequired
+    fullName: PropTypes.string
 };
 
 export default User;

@@ -39,7 +39,7 @@ function Header(props) {
         await toggleFallow(isFallowingProfile, user.docId, profileDocId, userProfileId, user.userId);
     }
 
-    return <div class="">
+    return <div class="pt-20">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-x-5 gap-y-6 w-full px-6 md:px-8 mt-3 py-3">
             <div class="flex items-center gap-x-5 w-full">
                 {profileUsername ? (

@@ -5,13 +5,15 @@ import Suggestions from './Suggestions';
 import User from './User';
 
 function Sidebar() {
-    const { user: { username, fullName, userId, 
-        fallowing, docId } 
+    const { user: { username, fullName, userId,
+        fallowing, docId }
     } = useContext(LoggedInUserContext);
 
-    return <div class="w-full">
-        <User username={username} fullName={fullName} />
-        <Suggestions userId={userId} fallowing={fallowing} loggedInUserDocId={docId} />
+    return <div class="fixed w-auto p-0">
+        <div class="w-full relative">
+            <User username={username} fullName={fullName} />
+            <Suggestions userId={userId} fallowing={fallowing} loggedInUserDocId={docId} />
+        </div>
     </div>;
 }
 

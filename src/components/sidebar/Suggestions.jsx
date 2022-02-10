@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Skeleton from 'react-loading-skeleton';
+import { Link } from 'react-router-dom';
 
 import { getSuggestedProfiles } from '../../services/firebase';
 import SuggestedProfiles from './SuggestedProfiles';
@@ -22,11 +23,16 @@ function Suggestions({ userId, fallowing, loggedInUserDocId }) {
     return !profiles ? (
         <Skeleton count={1} height={150} class="mt-5" />
     ) : profiles.length > 0 ? (
-        <div class="flex flex-col rounded gap-y-3">
-            <div class="pt-1">
+        <div class="flex flex-col rounded gap-y-3 w-full">
+            <div class="pt-1 flex items-center justify-between">
                 <p class="text-sm font-bold flex items-center">
                     Suggestions for you
                 </p>
+                <Link to="/explore/people"
+                    class="text-sm font-bold text-blue-medium p-3"
+                >
+                    See All
+                </Link>
             </div>
             <div class="grid grid-cols-1 gap-y-2">
                 {profiles.map((item) => (
