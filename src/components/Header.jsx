@@ -18,6 +18,7 @@ function Header() {
     const [dropdown, setDropdown] = useState(false);
     const [value, setValue] = useState('');
     const postRef = useRef(null);
+    console.log(value);
 
     const types = ["image/png", "image/jpeg"];
 
