@@ -13,7 +13,7 @@ function User({ username, fullName }) {
             ) : (
                 <Link to={`/p/${username}`} class="flex gap-4 mb-6 items-center w-full pr-6">
                     <div class="flex items-center justify-between">
-                        <img alt="" src="/images/avatars/karl.jpg"
+                        <img alt="" src={`/images/avatars/${username}.jpg`}
                             class="rounded-full w-16 h-16 flex"
                         // onError={(e) => e.target.src = DEFAULT_IMAGE_PATH}
                         />

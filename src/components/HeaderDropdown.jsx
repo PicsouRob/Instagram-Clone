@@ -17,7 +17,7 @@ function HeaderDropdown({ setDropdown, user }) {
 
     return (
         <motion.div
-            class="absolute -right-4 mt-5 bg-white z-30 w-52 rounded-md shadow-lg float-left after:w-4 after:h-6 after:bg-white after:absolute after:-top-2 after:right-4 after:-rotate-45"
+            class="absolute right-0 md:-right-4 mt-5 bg-white z-30 w-52 rounded-md shadow-lg float-left after:w-4 after:h-6 after:bg-white after:absolute after:-top-2 after:right-4 after:-rotate-45"
             initial={{ y: "-10vh" }}
             animate={{ y: 0 }}
         >

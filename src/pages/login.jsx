@@ -75,7 +75,7 @@ function Login() {
                             <hr class="w-2/5 border-1 border-gray-primary" />
                         </div>
                         <div class="flex items-center gap-x-2 cursor-pointer group">
-                            <img alt="" src="/images/facebook.svg" class="w-6 h-6" />
+                            <img alt="" src="/images/facebook.png" class="w-6 h-6" />
                             <p class="text-xs font-bold text-blue-medium group-hover:underline">Continue with Facebook</p>
                         </div>
                         <Link to="forgot-password" class="text-xs text-center text-blue-medium hover:underline h-2">
@@ -94,17 +94,17 @@ function Login() {
                 <div class="flex justify-center items-center flex-col gap-y-3 w-full">
                     <p class="text-xs">Download app</p>
                     <div class="flex items-center gap-x-2 px-6">
-                        <a class="w-1/2"
+                        <a class=""
                             href="https://apps.apple.com/app/instagram/id389801252?vt=lo"
                             target="_blank" rel="noreferrer"
                         >
-                            <img alt="" class="h-full" src="/images/app-store.svg" />
+                            <img alt="" class="h-full" src="/images/app-store.png" />
                         </a>
-                        <a class="w-1/2 py-1"
+                        <a class=""
                             href="https://play.google.com/store/apps/details?id=com.instagram.android&referrer=utm_source%3Dinstagramweb&utm_campaign=loginPage&ig_mid=82F09A14-BC63-4BDE-93A6-219DD0D8B4BC&utm_content=lo&utm_medium=badge"
                             target="_blank" rel="noreferrer"
                         >
-                            <img alt="" class="" src="/images/google-play.svg" />
+                            <img alt="" class="" src="/images/google-play.png" />
                         </a>
                     </div>
                 </div>

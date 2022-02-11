@@ -8,6 +8,7 @@ import { loggedInUserPost } from '../services/firebase';
 import Modal from './post/Modal';
 import SelectPhoto from './post/SelectPhoto';
 import HeaderDropdown from './HeaderDropdown';
+import NotificationsDropdown from './NotificationsDropdown';
 
 function Header() {
     const { user: loggedInUser } = useContext(UserContext);
@@ -16,9 +17,9 @@ function Header() {
     const [isShow, setIsShow] = useState(false);
     const [selectPhoto, setSelectPhoto] = useState(false);
     const [dropdown, setDropdown] = useState(false);
+    const [notifDropdown, setNotifDropdown] = useState(false);
     const [value, setValue] = useState('');
     const postRef = useRef(null);
-    console.log(value);
 
     const types = ["image/png", "image/jpeg"];
 
@@ -47,11 +48,11 @@ function Header() {
             <div class="flex items-center justify-between text-gray-700 text-center">
                 {user ? (
                     <div class="relative flex items-center gap-x-4 sm:gap-x-5">
-                        <div class="hidden md:flex items-center gap-x-2 text-[#333333] bg-[rgba(0,0,0,0.1)] text-sm rounded-md w-auto py-2 px-3 mr-16">
+                        <div class="hidden md:flex items-center gap-x-2 text-[#333333] bg-[rgba(0,0,0,0.1)] text-sm rounded-md w-auto py-2 px-3 mr-5 md:mr-6 lg:mr-16">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-[rgba(0,0,0,0.3)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                             </svg>
-                            <input type="text" placeholder="Search"
+                            <input type="text" placeholder="Search" value={value}
                                 onChange={(e) => setValue(e.target.value)}
                                 class="bg-[rgba(0,0,0,0.0)] focus:outline-none w-56"
                             />
@@ -79,13 +80,27 @@ function Header() {
                                 <polygon fill="none" points="13.941 13.953 7.581 16.424 10.06 10.056 16.42 7.585 13.941 13.953" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></polygon><polygon fill-rule="evenodd" points="10.06 10.056 13.949 13.945 7.581 16.424 10.06 10.056"></polygon><circle cx="12.001" cy="12.005" fill="none" r="10.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></circle>
                             </svg>
                         </Link>
-                        <Link to="/">
+                        <div class="cursor-pointer"
+                            onClick={() => {
+                                setDropdown(false);
+                                setNotifDropdown(!notifDropdown);
+                            }}
+                        >
                             <svg aria-label="Feed de actividad" class="_8-yf5 " color="#262626" fill="#262626" height="24" role="img" viewBox="0 0 24 24" width="24">
                                 <path d="M16.792 3.904A4.989 4.989 0 0121.5 9.122c0 3.072-2.652 4.959-5.197 7.222-2.512 2.243-3.865 3.469-4.303 3.752-.477-.309-2.143-1.823-4.303-3.752C5.141 14.072 2.5 12.167 2.5 9.122a4.989 4.989 0 014.708-5.218 4.21 4.21 0 013.675 1.941c.84 1.175.98 1.763 1.12 1.763s.278-.588 1.11-1.766a4.17 4.17 0 013.679-1.938m0-2a6.04 6.04 0 00-4.797 2.127 6.052 6.052 0 00-4.787-2.127A6.985 6.985 0 00.5 9.122c0 3.61 2.55 5.827 5.015 7.97.283.246.569.494.853.747l1.027.918a44.998 44.998 0 003.518 3.018 2 2 0 002.174 0 45.263 45.263 0 003.626-3.115l.922-.824c.293-.26.59-.519.885-.774 2.334-2.025 4.98-4.32 4.98-7.94a6.985 6.985 0 00-6.708-7.218z"></path>
                             </svg>
-                        </Link>
+                            {notifDropdown && (
+                                <NotificationsDropdown user={user}
+                                    setNotifDropdown={setNotifDropdown}
+                                    setDropdown={setDropdown}
+                                />
+                            )}
+                        </div>
                         <div class="relative w-8 h-8"
-                            onClick={() => setDropdown(!dropdown)}
+                            onClick={() => {
+                                setNotifDropdown(false);
+                                setDropdown(!dropdown);
+                            }}
                         >
                             {!user.username ? (
                                 <Skeleton count={1} height={30}
@@ -93,7 +108,7 @@ function Header() {
                                 />
                             ) : (
                                 <img alt="" src={`/images/avatars/${user.username}.jpg`}
-                                    class={`rounded-full cursor-pointer ${dropdown && "border-2 border-[#333333]"}`}
+                                    class={`rounded-full h-8 w-8 cursor-pointer ${dropdown && "border-2 border-[#333333]"}`}
                                 />
                             )}
                             {dropdown && (

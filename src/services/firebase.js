@@ -42,10 +42,21 @@ export async function getSuggestedProfiles(userId, fallowing) {
     
     const result = await query.limit().get();
 
-    const profiles = await result.docs.map((item) => ({
-        ...item.data(), docId: item.id
+    const resultResponse = await result.docs.map((item) => ({
+        ...item.data(), docId: item.id,
     }));
- 
+    
+    const profiles = await Promise.all(
+        resultResponse.map((profile) => {
+            let isFallowingProfile = false;
+            if(profile.fallowing.includes(userId)) {
+                isFallowingProfile =  true;
+            }
+
+            return { ...profile, isFallowingProfile }
+        })
+    );
+
     return profiles;
 }
 

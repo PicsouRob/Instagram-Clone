@@ -21,7 +21,7 @@ function Suggestions({ userId, fallowing, loggedInUserDocId }) {
     }, [userId, fallowing]);
 
     return !profiles ? (
-        <Skeleton count={1} height={150} class="mt-5" />
+        <Skeleton count={12} height={50} class="mt-5" />
     ) : profiles.length > 0 ? (
         <div class="flex flex-col rounded gap-y-3 w-full">
             <div class="pt-1 flex items-center justify-between">
@@ -29,7 +29,7 @@ function Suggestions({ userId, fallowing, loggedInUserDocId }) {
                     Suggestions for you
                 </p>
                 <Link to="/explore/people"
-                    class="text-sm font-bold text-blue-medium p-3"
+                    class="text-[14px] font-bold text-[#262626] p-3"
                 >
                     See All
                 </Link>
@@ -43,6 +43,8 @@ function Suggestions({ userId, fallowing, loggedInUserDocId }) {
                         profileId={item.userId}
                         profileDocId={item.docId}
                         loggedInUserDocId={loggedInUserDocId}
+                        fullName={item.fullName}
+                        dateCreated={item.dateCreated}
                     />
                 ))}
             </div>

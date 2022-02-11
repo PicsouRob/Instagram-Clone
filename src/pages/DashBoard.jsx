@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import Header from '../components/Header';
 import Timeline from '../components/Timeline';
@@ -8,6 +8,10 @@ import { useUser } from '../hooks/useUser';
 
 function Home({ user: loggedInUser }) {
     const { user, setActiveUser } = useUser(loggedInUser.uid);
+
+    useEffect(() => {
+        document.title = "Instagram"
+    }, []);
 
     return <LoggedInUserContext.Provider value={{ user, setActiveUser }}>
         <div class="relative w-full bg-gray-background mx-auto min-h-screen">

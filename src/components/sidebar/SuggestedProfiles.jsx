@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { formatDistance } from 'date-fns';
 
 import {
     updateFallowedUserFallowers, updateLoggedInUserFallowing
 } from '../../services/firebase';
 
 function SuggestedProfiles(props) {
-    const { username, userId, profileId, profileDocId, loggedInUserDocId } = props;
+    const { username, userId, profileId, profileDocId, loggedInUserDocId, fullName, dateCreated } = props;
     const [fallowed, setFallowed] = useState(false);
+    const date = Number(formatDistance(dateCreated, new Date()).substring(0, 2));
+    const day = formatDistance(dateCreated, new Date()).slice(3);
 
     const handleFallowSuggestedUser = async () => {
         setFallowed(true);
@@ -19,12 +22,18 @@ function SuggestedProfiles(props) {
     return !fallowed ? (
         <div class="flex items-center justify-between">
             <Link to={`/p/${username}`}
-                class="flex items-center justify-between gap-x-3"
+                class="flex items-center text-[#262626] justify-between gap-x-3"
             >
-                <img alt="" class="h-8 w-8 rounded-full border border-gray-primary"
+                <img alt="" class="h-12 w-12 rounded-full border border-gray-primary"
                     src={`/images/avatars/${username}.jpg`}
                 />
-                <p class="text-sm font-bold">{username}</p>
+                <div class="text-[12px] font-bold">
+                    <p class="text-[16px]">{username}</p>
+                    <p class="text-[#959494]">{fullName}</p>
+                    <p class="text-[#959494]">
+                        {date <= 29 && day === 'days' ? "New on instagram" : "suggestions for you"}
+                    </p>
+                </div>
             </Link>
             <div class="flex items-center justify-between">
                 <button class="text-blue-medium text-sm"
