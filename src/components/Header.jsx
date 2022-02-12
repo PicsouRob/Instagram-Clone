@@ -9,6 +9,7 @@ import Modal from './post/Modal';
 import SelectPhoto from './post/SelectPhoto';
 import HeaderDropdown from './HeaderDropdown';
 import NotificationsDropdown from './NotificationsDropdown';
+import SearchDropdown from './SearchDropdown';
 
 function Header() {
     const { user: loggedInUser } = useContext(UserContext);
@@ -18,8 +19,10 @@ function Header() {
     const [selectPhoto, setSelectPhoto] = useState(false);
     const [dropdown, setDropdown] = useState(false);
     const [notifDropdown, setNotifDropdown] = useState(false);
+    const [searchDropdown, setSearchDropdown] = useState(false);
     const [value, setValue] = useState('');
     const postRef = useRef(null);
+    const searchRef = useRef(null);
 
     const types = ["image/png", "image/jpeg"];
 
@@ -48,14 +51,38 @@ function Header() {
             <div class="flex items-center justify-between text-gray-700 text-center">
                 {user ? (
                     <div class="relative flex items-center gap-x-4 sm:gap-x-5">
-                        <div class="hidden md:flex items-center gap-x-2 text-[#333333] bg-[rgba(0,0,0,0.1)] text-sm rounded-md w-auto py-2 px-3 mr-5 md:mr-6 lg:mr-16">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-[rgba(0,0,0,0.3)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                            </svg>
-                            <input type="text" placeholder="Search" value={value}
-                                onChange={(e) => setValue(e.target.value)}
-                                class="bg-[rgba(0,0,0,0.0)] focus:outline-none w-56"
-                            />
+                        <div
+                            class="relative hidden md:flex items-center gap-x-2 text-[#333333] bg-[rgba(0,0,0,0.1)] text-sm rounded-md w-auto py-2 px-3 mr-5 md:mr-6 lg:mr-16"
+                        >
+                            <div class="flex items-center gap-x-3"
+                                onClick={() => {
+                                    searchRef.current.focus();
+                                    setSearchDropdown(true);
+                                }}
+                            >
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-[rgba(0,0,0,0.3)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                </svg>
+                                <input type="text" placeholder="Search" value={value} ref={searchRef}
+                                    onChange={(e) => setValue(e.target.value)}
+                                    class="bg-[rgba(0,0,0,0.0)] focus:outline-none w-56"
+                                />
+                            </div>
+                            {searchDropdown && <SearchDropdown value={value}
+                                setSearchDropdown={setSearchDropdown} user={user}
+                            />}
+                            {searchDropdown && (
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                    class="h-5 w-5 cursor-pointer text-[rgba(0,0,0,0.6)] z-40"
+                                    fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                                    onClick={() => {
+                                        setValue('');
+                                        setSearchDropdown(false);
+                                    }}
+                                >
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                            )}
                         </div>
                         <Link to="/">
                             <svg aria-label="Inicio" class="_8-yf5 " color="#262626" fill="#262626" height="24" role="img" viewBox="0 0 24 24" width="24">
@@ -65,19 +92,19 @@ function Header() {
                         </Link>
                         <Link to="/direct/inbox">
                             <svg aria-label="Messenger" class="_8-yf5 " color="#262626" fill="#262626" height="24" role="img" viewBox="0 0 24 24" width="24">
-                                <path d="M12.003 2.001a9.705 9.705 0 110 19.4 10.876 10.876 0 01-2.895-.384.798.798 0 00-.533.04l-1.984.876a.801.801 0 01-1.123-.708l-.054-1.78a.806.806 0 00-.27-.569 9.49 9.49 0 01-3.14-7.175 9.65 9.65 0 0110-9.7z" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="1.739"></path><path d="M17.79 10.132a.659.659 0 00-.962-.873l-2.556 2.05a.63.63 0 01-.758.002L11.06 9.47a1.576 1.576 0 00-2.277.42l-2.567 3.98a.659.659 0 00.961.875l2.556-2.049a.63.63 0 01.759-.002l2.452 1.84a1.576 1.576 0 002.278-.42z" fill-rule="evenodd"></path>
+                                <path d="M12.003 2.001a9.705 9.705 0 110 19.4 10.876 10.876 0 01-2.895-.384.798.798 0 00-.533.04l-1.984.876a.801.801 0 01-1.123-.708l-.054-1.78a.806.806 0 00-.27-.569 9.49 9.49 0 01-3.14-7.175 9.65 9.65 0 0110-9.7z" fill="none" stroke="currentColor" strokeMiterlimit="10" strokeWidth="1.739"></path><path d="M17.79 10.132a.659.659 0 00-.962-.873l-2.556 2.05a.63.63 0 01-.758.002L11.06 9.47a1.576 1.576 0 00-2.277.42l-2.567 3.98a.659.659 0 00.961.875l2.556-2.049a.63.63 0 01.759-.002l2.452 1.84a1.576 1.576 0 002.278-.42z" fillRule="evenodd"></path>
                             </svg>
                         </Link>
                         <div class="cursor-pointer"
                             onClick={() => setSelectPhoto(true)}
                         >
                             <svg aria-label="Nueva publicación" class="_8-yf5 " color="#262626" fill="#262626" height="24" role="img" viewBox="0 0 24 24" width="24">
-                                <path d="M2 12v3.45c0 2.849.698 4.005 1.606 4.944.94.909 2.098 1.608 4.946 1.608h6.896c2.848 0 4.006-.7 4.946-1.608C21.302 19.455 22 18.3 22 15.45V8.552c0-2.849-.698-4.006-1.606-4.945C19.454 2.7 18.296 2 15.448 2H8.552c-2.848 0-4.006.699-4.946 1.607C2.698 4.547 2 5.703 2 8.552z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path><line fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" x1="6.545" x2="17.455" y1="12.001" y2="12.001"></line><line fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" x1="12.003" x2="12.003" y1="6.545" y2="17.455"></line>
+                                <path d="M2 12v3.45c0 2.849.698 4.005 1.606 4.944.94.909 2.098 1.608 4.946 1.608h6.896c2.848 0 4.006-.7 4.946-1.608C21.302 19.455 22 18.3 22 15.45V8.552c0-2.849-.698-4.006-1.606-4.945C19.454 2.7 18.296 2 15.448 2H8.552c-2.848 0-4.006.699-4.946 1.607C2.698 4.547 2 5.703 2 8.552z" fill="none" stroke="currentColor" L="round" strokeLinejoin="round" strokeWidth="2"></path><line fill="none" stroke="currentColor" L="round" strokeLinejoin="round" strokeWidth="2" x1="6.545" x2="17.455" y1="12.001" y2="12.001"></line><line fill="none" stroke="currentColor" L="round" strokeLinejoin="round" strokeWidth="2" x1="12.003" x2="12.003" y1="6.545" y2="17.455"></line>
                             </svg>
                         </div>
                         <Link to="/explore">
                             <svg aria-label="Buscar personas" class="_8-yf5 " color="#262626" fill="#262626" height="24" role="img" viewBox="0 0 24 24" width="24">
-                                <polygon fill="none" points="13.941 13.953 7.581 16.424 10.06 10.056 16.42 7.585 13.941 13.953" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></polygon><polygon fill-rule="evenodd" points="10.06 10.056 13.949 13.945 7.581 16.424 10.06 10.056"></polygon><circle cx="12.001" cy="12.005" fill="none" r="10.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></circle>
+                                <polygon fill="none" points="13.941 13.953 7.581 16.424 10.06 10.056 16.42 7.585 13.941 13.953" stroke="currentColor" L="round" strokeLinejoin="round" strokeWidth="2"></polygon><polygon fillRule="evenodd" points="10.06 10.056 13.949 13.945 7.581 16.424 10.06 10.056"></polygon><circle cx="12.001" cy="12.005" fill="none" r="10.5" stroke="currentColor" L="round" strokeLinejoin="round" strokeWidth="2"></circle>
                             </svg>
                         </Link>
                         <div class="cursor-pointer"

@@ -39,7 +39,7 @@ Post.propTypes = {
         comments: PropTypes.array.isRequired,
         caption: PropTypes.string.isRequired,
         dateCreated: PropTypes.number.isRequired,
-        isUserlikePhotos: PropTypes.bool.isRequired,
+        isUserlikePhotos: PropTypes.bool,
         imageSrc: PropTypes.string.isRequired,
         userId: PropTypes.string.isRequired,
     })

@@ -34,6 +34,13 @@ function SignUp() {
                     displayName: username
                 });
 
+                // firebase collection searchDropdown
+                await firebaseApp.firestore().collection('recent-search')
+                    .add({
+                        userId: createNewUser.user.uid,
+                        recent: [],
+                    });
+
                 // firebase collection users
                 await firebaseApp.firestore().collection('users')
                     .add({
@@ -127,12 +134,12 @@ function SignUp() {
                     </p>
                 </div>
                 <div class="flex justify-center items-center flex-col w-full bg-white p-4 border border-gray-primary">
-                    <p class="text-sm">
+                    <div class="text-sm">
                         You have an account?{` `}
                         <Link to="/login" class="text-blue-medium font-bold">
                             Log in
                         </Link>
-                    </p>
+                    </div>
                 </div>
                 <div class="flex justify-center items-center flex-col gap-y-3 w-full">
                     <p class="text-xs">Download app</p>

@@ -147,3 +147,72 @@ export async function loggedInUserPost(file, setUrl, userId) {
         setUrl(url);
     });
 }
+
+export async function getRecentSearch(userId) {
+    const result = await firebaseApp.firestore().collection('recent-search')
+        .where('userId', '==', userId).get();
+
+    const [recentUser] = await result.docs.map((recents) => ({
+        ...recents.data(), docId: recents.id
+    }));
+    
+    const res = await recentUser.recent.map((res) => res);
+    let query = firebaseApp.firestore().collection('users');
+
+    if(res.length > 0) {
+        query = query.where('userId', 'in', res);
+    } else {
+        query = query.where('userId', '==', recentUser.docId);
+    }
+
+    const queryResult = await query.get();
+
+    const response = await queryResult.docs.map((item) => ({
+        ...item.data(), docId: item.id, searchId: recentUser.docId
+    }));
+
+    return response;
+}
+
+export async function getSearchProfiles(value) {
+    const user = await firebaseApp.firestore()
+        .collection('users').get();
+
+    const result = await user.docs.map((item) => ({
+        ...item.data(), docId: item.id
+    }));
+
+    const val = value.toLowerCase();
+    const res = result.filter(({ username }) => username.toLowerCase().includes(val));
+
+    return res;
+}
+
+export async function deleteSearchRecent(userProfile, isAdd, userId) {
+    const result = await firebaseApp.firestore().collection('recent-search')
+            .where('userId', '==', userId).get();
+            
+    const [recentUser] = await result.docs.map((recents) => ({
+        ...recents.data(), docId: recents.id
+    }));    
+    
+    return firebaseApp.firestore().collection('recent-search')
+        .doc(recentUser.docId).update({
+            recent: isAdd ? FieldValue.arrayUnion(userProfile.userId) :
+                FieldValue.arrayRemove(userProfile.userId)
+        });
+}
+
+export async function deleteAllSearchRecent(userId) {
+    const result = await firebaseApp.firestore().collection('recent-search')
+        .where('userId', '==', userId).get();
+            
+    const [recentUser] = await result.docs.map((recents) => ({
+        ...recents.data(), docId: recents.id
+    })); 
+
+    return firebaseApp.firestore().collection('recent-search')
+        .doc(recentUser.docId).update({
+            recent: FieldValue.delete()
+        });
+}

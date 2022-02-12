@@ -84,12 +84,12 @@ function Login() {
                     </div>
                 </div>
                 <div class="flex justify-center items-center flex-col w-full bg-white p-4 border border-gray-primary">
-                    <p class="text-sm">
+                    <div class="text-sm">
                         Don't have account? {` `}
                         <Link to="/sign-up" class="text-blue-medium font-bold">
                             sign up
                         </Link>
-                    </p>
+                    </div>
                 </div>
                 <div class="flex justify-center items-center flex-col gap-y-3 w-full">
                     <p class="text-xs">Download app</p>
