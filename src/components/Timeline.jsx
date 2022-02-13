@@ -4,6 +4,7 @@ import Skeleton from 'react-loading-skeleton';
 import LoggedInUserContext from '../context/loggedInUserContext';
 import { usePhotos } from '../hooks/usePhotos';
 import Post from './post/Post';
+import Stories from './stories/Stories';
 
 function Timeline() {
     const { user } = useContext(LoggedInUserContext);
@@ -11,6 +12,7 @@ function Timeline() {
 
     return (
         <div class="col-span-2 pb-5">
+            <Stories />
             {!photos ? (
                 <div class="w-full">
                     {[...new Array(5)].map((_, index) => (

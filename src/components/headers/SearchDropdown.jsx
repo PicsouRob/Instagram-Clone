@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import {
     getRecentSearch, getSearchProfiles,
     deleteSearchRecent, deleteAllSearchRecent
-} from '../services/firebase';
+} from '../../services/firebase';
 
 function SearchDropdown({ value, user, setSearchDropdown }) {
     const navigate = useNavigate();

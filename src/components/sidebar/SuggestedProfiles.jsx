@@ -25,7 +25,7 @@ function SuggestedProfiles(props) {
                 class="flex items-center text-[#262626] justify-between gap-x-3"
             >
                 <img alt="" class="h-12 w-12 rounded-full border border-gray-primary"
-                    src={`/images/avatars/${username}.jpg`}
+                    src={`${!profileId.includes('com') ? `/images/avatars/${username}.jpg` : `${profileId}`}`}
                 />
                 <div class="text-[12px] font-bold">
                     <p class="text-[16px]">{username}</p>

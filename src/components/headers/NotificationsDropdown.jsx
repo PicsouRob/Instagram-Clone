@@ -7,8 +7,8 @@ import { formatDistance } from 'date-fns';
 
 import {
     getSuggestedProfiles
-} from '../services/firebase';
-import FirebaseContext from '../context/firebase';
+} from '../../services/firebase';
+import FirebaseContext from '../../context/firebase';
 
 function NotificationsDropdown({ user }) {
     const { userId, fallowing, docId: loggedInUserDocId } = user;

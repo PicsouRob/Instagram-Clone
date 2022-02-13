@@ -1,7 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
+import { faker } from '@faker-js/faker';
 
-import Header from '../components/Header';
+import Header from '../components/headers/Header';
 import { useUser } from '../hooks/useUser';
 import UserContext from '../context/user';
 import { getSuggestedProfiles } from '../services/firebase';
@@ -15,7 +16,18 @@ function ExploreAll() {
     useEffect(() => {
         async function suggestedProfiles() {
             const res = await getSuggestedProfiles(userId, fallowing);
-            setProfiles(res);
+            const data = await [...Array(20)].map((_, i) => ({
+                ...faker.helpers.contextualCard(), id: i
+            }));
+            const dataResp = await data.map((item) => ({
+                username: item.username,
+                docId: item.website,
+                fullName: item.name,
+                profileId: item.email,
+                dateCreated: Date.now(),
+                userId: item.avatar,
+            }));
+            setProfiles([...res, ...dataResp]);
         }
 
         if (userId) {
@@ -26,7 +38,7 @@ function ExploreAll() {
     return (
         <div class="">
             <Header />
-            <div class="pt-24 md:pt-28 max-w-lg mx-auto md:px-0 bg-white md:bg-gray-background min-h-screen">
+            <div class="pt-4 max-w-lg mx-auto md:px-0 bg-white md:bg-gray-background min-h-screen mb-8">
                 <p class="text-sm px-3 pb-2 font-bold text-[#726d6d]">Suggestions</p>
                 {!profiles ? (
                     <Skeleton count={12} height={60} class="mt-5" />

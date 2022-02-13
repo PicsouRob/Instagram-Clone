@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import PropTypes from 'prop-types';
 import { Link, useNavigate } from 'react-router-dom';
 
-import FirebaseContext from '../context/firebase';
+import FirebaseContext from '../../context/firebase';
 
 function HeaderDropdown({ setDropdown, user }) {
     const navigate = useNavigate();

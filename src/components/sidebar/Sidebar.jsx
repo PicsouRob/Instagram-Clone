@@ -9,7 +9,7 @@ function Sidebar() {
         fallowing, docId }
     } = useContext(LoggedInUserContext);
 
-    return <div class="fixed w-auto p-0">
+    return <div class="fixed">
         <div class="w-full relative">
             <User username={username} fullName={fullName} />
             <Suggestions userId={userId} fallowing={fallowing} loggedInUserDocId={docId} />

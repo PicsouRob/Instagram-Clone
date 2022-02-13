@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { getUserByUsername } from '../services/firebase';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import Header from '../components/Header';
+import Header from '../components/headers/Header';
 import UserProfile from '../components/profile/UserProfile';
 
 function Profile() {
