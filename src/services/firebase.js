@@ -49,7 +49,7 @@ export async function getSuggestedProfiles(userId, fallowing) {
     const profiles = await Promise.all(
         resultResponse.map((profile) => {
             let isFallowingProfile = false;
-            if(profile.fallowing.includes(userId)) {
+            if(profile?.fallowing > 0 && profile?.fallowing.includes(userId)) {
                 isFallowingProfile =  true;
             }
 

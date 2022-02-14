@@ -8,7 +8,7 @@ import {
 } from '../../services/firebase';
 
 function SuggestedProfiles(props) {
-    const { username, userId, profileId, profileDocId, loggedInUserDocId, fullName, dateCreated } = props;
+    const { username, userId, profileId, profileDocId, loggedInUserDocId, fullName, dateCreated, avatar, explore } = props;
     const [fallowed, setFallowed] = useState(false);
     const date = Number(formatDistance(dateCreated, new Date()).substring(0, 2));
     const day = formatDistance(dateCreated, new Date()).slice(3);
@@ -20,27 +20,29 @@ function SuggestedProfiles(props) {
     }
 
     return !fallowed ? (
-        <div class="flex items-center justify-between">
-            <Link to={`/p/${username}`}
-                class="flex items-center text-[#262626] justify-between gap-x-3"
-            >
-                <img alt="" class="h-12 w-12 rounded-full border border-gray-primary"
-                    src={`${!profileId.includes('com') ? `/images/avatars/${username}.jpg` : `${profileId}`}`}
-                />
-                <div class="text-[12px] font-bold">
-                    <p class="text-[16px]">{username}</p>
-                    <p class="text-[#959494]">{fullName}</p>
-                    <p class="text-[#959494]">
-                        {date <= 29 && day === 'days' ? "New on instagram" : "suggestions for you"}
-                    </p>
-                </div>
-            </Link>
+        <div class="">
             <div class="flex items-center justify-between">
-                <button class="text-blue-medium text-sm"
-                    onClick={() => handleFallowSuggestedUser()}
+                <Link to={`/p/${username}`}
+                    class="flex items-center text-[#262626] justify-between gap-x-3"
                 >
-                    Follow
-                </button>
+                    <img alt="" class={`${explore ? "h-12 w-12" : "w-8 h-8"} rounded-full border border-gray-primary`}
+                        src={avatar ? avatar : `/images/avatars/default.png`}
+                    />
+                    <div class={`${explore ? "text-[12px] font-bold" : "text-[11px]"}`}>
+                        <p class="text-[16px]">{username}</p>
+                        {explore && <p class="text-[#959494]">{fullName}</p>}
+                        <p class="text-[#959494]">
+                            {date <= 29 && day === 'days' ? "New on instagram" : "suggestions for you"}
+                        </p>
+                    </div>
+                </Link>
+                <div class="flex items-center justify-between">
+                    <button class="text-blue-medium text-sm"
+                        onClick={() => handleFallowSuggestedUser()}
+                    >
+                        Follow
+                    </button>
+                </div>
             </div>
         </div>
     ) : null;

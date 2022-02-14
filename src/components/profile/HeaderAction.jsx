@@ -1,13 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+
+import Dropdown from './Dropdown';
 
 function HeaderAction(props) {
     const { activeFallowBtn, isFallowingProfile,
         profileUsername, handleFallowUser
     } = props;
+    const [dropdown, setDropdown] = useState(false);
 
-    return <div class="flex items-center justify-between">
+    return <div class="relative flex items-center justify-between">
         <h3 class="text-xl md:text-2xl text-[#333333]">{profileUsername}</h3>
         <div class="">
             {activeFallowBtn ? (
@@ -18,15 +21,21 @@ function HeaderAction(props) {
                 </button>
             ) : (
                 <Link to={`/accounts/edit`}
-                    class="border rounded-md border-[#262626] px-3 shadow-sm font-bold text-[#262626] text-xs py-2 w-auto"
+                    class="border rounded-md border-gray-primary px-3 shadow-sm font-bold text-[#262626] text-xs py-2 w-auto"
                 >
                     Edit profile
                 </Link>
             )}
         </div>
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 cursor-pointer text-[#333333]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z" />
+        <svg aria-label="Opciones" class="_8-yf5 cursor-pointer" color="#262626" fill="#262626" height="24" role="img" viewBox="0 0 24 24" width="24"
+            onClick={() => setDropdown(true)}
+        >
+            <circle cx="12" cy="12" fill="none" r="8.635" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></circle><path d="M14.232 3.656a1.269 1.269 0 01-.796-.66L12.93 2h-1.86l-.505.996a1.269 1.269 0 01-.796.66m-.001 16.688a1.269 1.269 0 01.796.66l.505.996h1.862l.505-.996a1.269 1.269 0 01.796-.66M3.656 9.768a1.269 1.269 0 01-.66.796L2 11.07v1.862l.996.505a1.269 1.269 0 01.66.796m16.688-.001a1.269 1.269 0 01.66-.796L22 12.93v-1.86l-.996-.505a1.269 1.269 0 01-.66-.796M7.678 4.522a1.269 1.269 0 01-1.03.096l-1.06-.348L4.27 5.587l.348 1.062a1.269 1.269 0 01-.096 1.03m11.8 11.799a1.269 1.269 0 011.03-.096l1.06.348 1.318-1.317-.348-1.062a1.269 1.269 0 01.096-1.03m-14.956.001a1.269 1.269 0 01.096 1.03l-.348 1.06 1.317 1.318 1.062-.348a1.269 1.269 0 011.03.096m11.799-11.8a1.269 1.269 0 01-.096-1.03l.348-1.06-1.317-1.318-1.062.348a1.269 1.269 0 01-1.03-.096" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="2">
+            </path>
         </svg>
+        {dropdown && (
+            <Dropdown setDropdown={setDropdown} />
+        )}
     </div>;
 }
 

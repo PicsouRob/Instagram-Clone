@@ -50,7 +50,8 @@ function SignUp() {
                         emailAddress: email.toLowerCase(),
                         following: [],
                         followers: [],
-                        dateCreated: Date.now()
+                        dateCreated: Date.now(),
+                        avatar: ''
                     });
 
                 navigate('/');

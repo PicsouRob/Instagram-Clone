@@ -34,7 +34,7 @@ function Header() {
         }
     }
 
-    return <div class="">
+    return <div class="fixed w-full z-40">
         <div class="h-16 border-b border-gray-primary w-full bg-white mb-0 sm:mb-6 z-30">
             <div class="relative container mx-auto max-w-screen-lg px-3 md:px-6 flex items-center justify-between h-full">
                 <Link to="/">
@@ -135,7 +135,7 @@ function Header() {
                                         width={30} circle
                                     />
                                 ) : (
-                                    <img alt="" src={`/images/avatars/${user.username}.jpg`}
+                                    <img alt="" src={user.avatar ? user.avatar : `/images/avatars/default.png`}
                                         class={`rounded-full h-8 w-8 cursor-pointer ${dropdown && "border-2 border-[#333333]"}`}
                                     />
                                 )}

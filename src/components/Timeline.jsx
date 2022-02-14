@@ -11,7 +11,7 @@ function Timeline() {
     const { photos } = usePhotos(user);
 
     return (
-        <div class="col-span-2 pb-5">
+        <div class="pb-5">
             <Stories />
             {!photos ? (
                 <div class="w-full">

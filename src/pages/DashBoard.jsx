@@ -14,14 +14,14 @@ function Home({ user: loggedInUser }) {
     }, []);
 
     return <LoggedInUserContext.Provider value={{ user, setActiveUser }}>
-        <div class="w-full bg-gray-background mx-auto min-h-screen">
-            {/* <div class="fixed top-0 right-0 left-0"> */}
-                <Header />
-            {/* </div> */}
-            <div class="container mx-auto max-w-screen-lg px-0 md:px-6">
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-x-0 md:gap-x-4 w-full">
-                    <Timeline />
-                    <div class="hidden md:flex">
+        <div class="relative w-full bg-gray-background mx-auto min-h-screen">
+            <Header />
+            <div class="pt-[65px] md:pt-[95px] container mx-auto max-w-screen-lg px-0 md:px-6">
+                <div class="flex gap-x-6">
+                    <div class="w-full lg:w-4/6">
+                        <Timeline />
+                    </div>
+                    <div class="hidden lg:flex lg:w-2/6 h-auto">
                         <Sidebar />
                     </div>
                 </div>

@@ -26,6 +26,7 @@ function ExploreAll() {
                 profileId: item.email,
                 dateCreated: Date.now(),
                 userId: item.avatar,
+                avatar: item.avatar,
             }));
             setProfiles([...res, ...dataResp]);
         }
@@ -38,7 +39,7 @@ function ExploreAll() {
     return (
         <div class="">
             <Header />
-            <div class="pt-4 max-w-lg mx-auto md:px-0 bg-white md:bg-gray-background min-h-screen mb-8">
+            <div class="pt-[95px] max-w-lg mx-auto md:px-0 bg-white md:bg-gray-background min-h-screen mb-8">
                 <p class="text-sm px-3 pb-2 font-bold text-[#726d6d]">Suggestions</p>
                 {!profiles ? (
                     <Skeleton count={12} height={60} class="mt-5" />
@@ -54,6 +55,8 @@ function ExploreAll() {
                                 profileDocId={item.docId}
                                 loggedInUserDocId={docId}
                                 dateCreated={item.dateCreated}
+                                avatar={item.avatar}
+                                explore
                             />
                         ))}
                     </div>
