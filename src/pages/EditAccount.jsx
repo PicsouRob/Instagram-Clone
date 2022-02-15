@@ -19,7 +19,7 @@ function EditAccount() {
     return (
         <div class="">
             <Header />
-            <div class="container mx-auto pt-[95px] max-w-screen-lg px-0 md:px-6 pb-5">
+            <div class="container mx-auto pt-[65px] md:pt-[95px] max-w-screen-lg px-0 md:px-6 pb-5 bg-white md:bg-gray-background">
                 <div class="bg-white border border-gray-primary flex divide-x divide-gray-primary">
                     <LeftSide setIndexSide={setIndexSide} indexSide={indexSide} />
                     <RightSide setIndexSide={setIndexSide} indexSide={indexSide}

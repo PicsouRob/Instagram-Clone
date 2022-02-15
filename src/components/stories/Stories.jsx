@@ -23,7 +23,7 @@ function Stories() {
                 settings: {
                     slidesToShow: 6,
                     dots: false,
-                    infinite: false,
+                    infinite: true,
                     slidesToScroll: 6
                 }
             }

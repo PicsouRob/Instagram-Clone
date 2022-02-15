@@ -6,8 +6,8 @@ import ChangePassword from './ChangePassword';
 
 function RightSide({ indexSide, setIndexSide, user }) {
     return (
-        <div class="w-4/4 md:w-3/4 flex justify-center py-6">
-            <div class="w-full md:w-2/3 px-3 md:px-0 mx-auto container">
+        <div class="w-full md:w-11/12 flex justify-center py-6">
+            <div class="w-full md:w-10/12 px-5 md:px-0 mx-auto">
                 {indexSide === 0 && (
                     <EditCurrentUser user={user} />
                 )}
