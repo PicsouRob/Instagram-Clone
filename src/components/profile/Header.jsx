@@ -13,7 +13,7 @@ function Header(props) {
     } = props;
     const { username: profileUsername, docId: profileDocId,
         userId: userProfileId, fullName,
-        emailAddress
+        emailAddress, website, bio
     } = profile;
     const { user: loggedInUser } = useContext(UserContext);
     const { user } = useUser(loggedInUser.uid);
@@ -41,9 +41,9 @@ function Header(props) {
 
     return <div class="pt-[95px]">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-x-5 gap-y-6 w-full px-6 md:px-8 mt-3 py-3">
-            <div class="flex items-center gap-x-5 w-full">
+            <div class="flex gap-x-5 w-full">
                 {profileUsername ? (
-                    <img class="rounded-full w-24 md:w-40 h-24 md:h-40" alt=""
+                    <img class="rounded-full w-24 md:w-[150px] h-24 md:h-[150px]" alt=""
                         src={`/images/avatars/${profileUsername}.jpg`}
                     />
                 ) : (
@@ -81,6 +81,16 @@ function Header(props) {
                 </div>
                 <p class="text-[#333333] text-sm font-bold mt-2">{fullName}</p>
                 <p class="text-sm">{emailAddress}</p>
+                {bio && (
+                    <p class="text-sm">{bio}</p>
+                )}
+                {website && (
+                    <a href={website} target="_blank" rel="noreferrer"
+                        class="text-sm text-blue-medium cursor-pointer"
+                    >
+                        {website}
+                    </a>
+                )}
             </div>
         </div>
         <div class="mt-10 py-2 border-t border-gray-primary px-6 md:px-8 block md:hidden">

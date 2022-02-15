@@ -51,7 +51,8 @@ function SignUp() {
                         following: [],
                         followers: [],
                         dateCreated: Date.now(),
-                        avatar: ''
+                        avatar: '', bio: '', website: '',
+                        phone: '', gender: '', isVerify: false
                     });
 
                 navigate('/');
