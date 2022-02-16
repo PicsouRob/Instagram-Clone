@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import Header from './Header';
@@ -6,23 +6,31 @@ import Image from './Image';
 import Action from './Action';
 import Footer from './Footer';
 import Comments from './Comments';
+import ViewComments from './ViewComments';
 
 function Post({ content }) {
     const { username, caption, imageSrc, docId, comments,
         likes, dateCreated, isUserlikePhotos
     } = content;
     const inputComment = useRef(null);
+    const [viewComments, setViewComments] = useState(true);
 
     const handleFocus = () => inputComment.current.focus();
 
     return (
-        <div class="rounded bg-white border border-gray-primary">
+        <div class="relative rounded bg-white border border-gray-primary">
             <Header username={username} />
             <Image caption={caption} src={imageSrc} />
             <Action docId={docId} totalLikes={likes.length}
                 likedPhoto={isUserlikePhotos}
                 handleFocus={() => handleFocus()}
             />
+            {viewComments && (
+                <ViewComments content={content} setViewComments={setViewComments}
+                    handleFocus={() => handleFocus()}
+                    inputComment={inputComment}
+                />
+            )}
             <Footer caption={caption} username={username} />
             <Comments docId={docId} comments={comments}
                 inputComment={inputComment} posted={dateCreated}

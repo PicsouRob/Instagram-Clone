@@ -1,15 +1,37 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { motion } from 'framer-motion';
 import Skeleton from 'react-loading-skeleton';
+import { useNavigate } from 'react-router-dom';
 import { Formik } from 'formik';
 import * as yup from 'yup';
+import { EmailAuthProvider } from 'firebase/auth';
+
+import { firebaseApp } from '../../lib/firebase.js';
 
 const validate = yup.object().shape({
-
+    password: yup.string().required().required(),
+    newPassword: yup.string().min(6).required(),
+    confirmPassword: yup.string()
+        .oneOf([yup.ref('newPassword'), null], 'New Passwords must match')
+        .required(),
 });
 
 function ChangePassword({ user }) {
+    const navigate = useNavigate();
+    const [error, setError] = useState('');
+
+    const submitNewPassword = async (values) => {
+        const newPassword = values.newPassword;
+        const currentUser = await firebaseApp.auth().currentUser;
+        const credentials = await EmailAuthProvider.credential(user.emailAddress, values.password);
+        await currentUser.reauthenticateWithCredential(credentials).then(() => {
+            currentUser.updatePassword(newPassword).then(() => {
+                navigate('/');
+            }).catch((error) => setError(error.message));
+        }).catch((error) => setError(error.message));
+    }
+
     return (
         <motion.div class="relative w-full"
             initial={{ scale: 0 }}
@@ -35,20 +57,28 @@ function ChangePassword({ user }) {
                         <Formik
                             initialValues={{ password: '', newPassword: '', confirmPassword: '' }}
                             validationSchema={validate}
-                            onSubmit={(values) => console.log(values)}
+                            onSubmit={(values) => submitNewPassword(values)}
                         >
                             {({ values, errors, touched, handleChange, handleBlur, handleSubmit }) => (
-                                <form onSubmit={handleSubmit} class="w-full space-y-4">
+                                <form class="w-full space-y-4">
                                     <div class="flex flex-col md:flex-row gap-y-2 gap-x-10">
                                         <div class="w-full md:w-1/4">
                                             <p class="font-bold text-sm text-left md:text-right">Old Password</p>
                                         </div>
                                         <div class="w-full md:w-3/4">
-                                            <input type="password" value={user.username}
-                                                name="password"
+                                            <input type="password" value={values.password || ""}
+                                                name="password" placeholder="Old Password"
                                                 class="border border-gray-primary text-sm p-1 bg-gray-background w-full rounded-sm"
                                                 onChange={handleChange}
                                             />
+                                            {touched.password && errors.password && (
+                                                <p class="text-[12px] text-red-primary">{errors.password}</p>
+                                            )}
+                                            {error.includes('The password is invalid') && (
+                                                <p class="text-[12px] text-red-primary">
+                                                    The password is invalid
+                                                </p>
+                                            )}
                                         </div>
                                     </div>
                                     <div class="flex flex-col md:flex-row gap-y-2 gap-x-10">
@@ -61,6 +91,9 @@ function ChangePassword({ user }) {
                                                 class="border border-gray-primary text-sm p-2 bg-gray-background w-full rounded-sm"
                                                 onChange={handleChange}
                                             />
+                                            {touched.newPassword && errors.newPassword && (
+                                                <p class="text-[12px] text-red-primary">{errors.newPassword}</p>
+                                            )}
                                         </div>
                                     </div>
                                     <div class="flex flex-col md:flex-row gap-y-2 gap-x-10">
@@ -73,6 +106,9 @@ function ChangePassword({ user }) {
                                                 class="border border-gray-primary text-sm p-2 bg-gray-background w-full rounded-sm"
                                                 onChange={handleChange}
                                             />
+                                            {touched.confirmPassword && errors.confirmPassword && (
+                                                <p class="text-[12px] text-red-primary">{errors.confirmPassword}</p>
+                                            )}
                                         </div>
                                     </div>
                                     <div class="relative flex flex-col md:flex-row gap-x-5 md:gap-x-10">
@@ -80,7 +116,9 @@ function ChangePassword({ user }) {
                                             <p class="hidden md:block font-bold text-sm text-left md:text-right text-white select-none">New Password</p>
                                         </div>
                                         <div class="w-full md:w-3/4">
-                                            <button type="submit" class={`${errors && "opacity-80"} text-white bg-blue-medium text-sm font-bold px-3 py-1 rounded-md mt-5`}>
+                                            <button type="button" class={`${errors && "opacity-80"} text-white bg-blue-medium text-sm font-bold px-3 py-1 rounded-md mt-5`}
+                                                onClick={() => handleSubmit()}
+                                            >
                                                 Change Password
                                             </button>
                                             <div class="w-full md:w-3/4 mt-3">

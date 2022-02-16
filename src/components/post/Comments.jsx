@@ -10,9 +10,9 @@ function Comments({ docId, comments: allComments, posted, inputComment }) {
 
     return <div class="px-4 text-sm pb-3 pt-1">
         {comments.length >= 3 && (
-            <p class="text-gray-base cursor-pointer mb-1">
+            <div class="text-gray-base cursor-pointer mb-1">
                 View all {comments.length} comments
-            </p>
+            </div>
         )}
         {comments.slice(0, 3).map((item, index) => (
             <p class="mb-1 flex" key={index}>

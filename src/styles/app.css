@@ -555,6 +555,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 .mt-3 {
   margin-top: 0.75rem;
 }
+.-mt-4 {
+  margin-top: -1rem;
+}
 .mb-6 {
   margin-bottom: 1.5rem;
 }
@@ -656,6 +659,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .h-\[380px\] {
   height: 380px;
+}
+.h-5\/6 {
+  height: 83.333333%;
 }
 .h-24 {
   height: 6rem;
@@ -919,6 +925,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 .rounded-lg {
   border-radius: 0.5rem;
 }
+.rounded-l-lg {
+  border-top-left-radius: 0.5rem;
+  border-bottom-left-radius: 0.5rem;
+}
 .border {
   border-width: 1px;
 }
@@ -985,6 +995,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 .bg-\[rgba\(0\2c 0\2c 0\2c 0\.5\)\] {
   background-color: rgba(0,0,0,0.5);
 }
+.bg-\[rgba\(0\2c 0\2c 0\2c 0\.3\)\] {
+  background-color: rgba(0,0,0,0.3);
+}
 .fill-red {
   fill: #ed4956;
 }
@@ -993,6 +1006,9 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 .object-cover {
   object-fit: cover;
+}
+.object-fill {
+  object-fit: fill;
 }
 .p-4 {
   padding: 1rem;
@@ -1274,6 +1290,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   --tw-text-opacity: 1;
   color: rgb(58 58 58 / var(--tw-text-opacity));
 }
+.text-\[\#4d4d4d\] {
+  --tw-text-opacity: 1;
+  color: rgb(77 77 77 / var(--tw-text-opacity));
+}
 .opacity-70 {
   opacity: 0.7;
 }
@@ -1466,24 +1486,16 @@ Ensure the default browser behavior of the `hidden` attribute.
     width: 91.666667%;
   }
 
+  .md\:w-10\/12 {
+    width: 83.333333%;
+  }
+
   .md\:w-auto {
     width: auto;
   }
 
   .md\:w-\[150px\] {
     width: 150px;
-  }
-
-  .md\:w-10\/12 {
-    width: 83.333333%;
-  }
-
-  .md\:w-2\/3 {
-    width: 66.666667%;
-  }
-
-  .md\:w-9\/12 {
-    width: 75%;
   }
 
   .md\:grid-cols-3 {

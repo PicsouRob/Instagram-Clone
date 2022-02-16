@@ -8,7 +8,7 @@ import { useUser } from '../hooks/useUser';
 import { editFooter } from '../services/userProfilSetting';
 
 function EditAccount() {
-    const [indexSide, setIndexSide] = useState(0);
+    const [indexSide, setIndexSide] = useState(1);
     const { user: loggedInUser } = useContext(UserContext);
     const { user } = useUser(loggedInUser.uid);
 
