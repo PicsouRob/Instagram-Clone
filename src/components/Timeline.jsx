@@ -24,7 +24,9 @@ function Timeline() {
             ) : photos?.length > 0 ? (
                 <div class="flex flex-col gap-y-4">
                     {photos.map((photo, index) => (
-                        <Post key={index} content={photo} />
+                        <Post key={index} userId={photo.userId} content={photo}
+                            user={user}
+                        />
                     ))}
                 </div>
             ) : (

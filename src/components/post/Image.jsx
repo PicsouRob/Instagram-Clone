@@ -1,15 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
-function Image({ src, caption }) {
-    return <div>
-        <img alt="" src={src} />
-    </div>;
+function Image({ src, caption, docId }) {
+    return <Link to={`/p/${docId}`}>
+        <img alt={caption} src={src} />
+    </Link>;
 }
 
 Image.propTypes = {
     src: PropTypes.string.isRequired,
     caption: PropTypes.string.isRequired,
+    docId: PropTypes.string.isRequired,
 }
 
 export default Image;

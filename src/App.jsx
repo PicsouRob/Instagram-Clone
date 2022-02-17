@@ -17,6 +17,7 @@ const Explore = lazy(() => import('./pages/Explore'));
 const ExploreAll = lazy(() => import('./pages/ExploreAll'));
 const Message = lazy(() => import('./pages/Message'));
 const EditAccount = lazy(() => import('./pages/EditAccount'));
+const ViewComments = lazy(() => import('./components/post/ViewComments'));
 
 const App = () => {
   const { user } = useAuthListener();
@@ -41,8 +42,8 @@ const App = () => {
                 <SignUp />
               </IsUserLoggedIn>}
             />
-            <Route path="/p/:username" element={<Profile />} />
             <Route path="/direct/inbox" element={<Message />} />
+            <Route path="/p/:photos" element={<ViewComments />} />
             <Route path="/explore" element={<Explore />} />
             <Route path="/explore/people" element={<ExploreAll />} />
             <Route path="/accounts/edit" element={<EditAccount />} />

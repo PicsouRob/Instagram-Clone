@@ -5,14 +5,22 @@ import { formatDistance } from 'date-fns';
 
 import AddComment from './AddComment';
 
-function Comments({ docId, comments: allComments, posted, inputComment }) {
+function Comments({ docId, comments: allComments, posted,
+    inputComment, setViewComments, userId
+}) {
     const [comments, setComments] = useState(allComments);
+
+    const viewComments = () => {
+        setViewComments(true);
+    }
 
     return <div class="px-4 text-sm pb-3 pt-1">
         {comments.length >= 3 && (
-            <div class="text-gray-base cursor-pointer mb-1">
+            <Link to={`/p/${docId}`} class="text-gray-base cursor-pointer mb-1"
+                onClick={() => viewComments()}
+            >
                 View all {comments.length} comments
-            </div>
+            </Link>
         )}
         {comments.slice(0, 3).map((item, index) => (
             <p class="mb-1 flex" key={index}>
@@ -35,9 +43,11 @@ function Comments({ docId, comments: allComments, posted, inputComment }) {
 
 Comments.propTypes = {
     docId: PropTypes.string.isRequired,
+    userId: PropTypes.string.isRequired,
     comments: PropTypes.array.isRequired,
     posted: PropTypes.number.isRequired,
-    inputComment: PropTypes.object.isRequired
+    inputComment: PropTypes.object.isRequired,
+    setViewComments: PropTypes.func.isRequired,
 }
 
 export default Comments;

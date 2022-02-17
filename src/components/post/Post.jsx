@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import Header from './Header';
@@ -8,32 +8,38 @@ import Footer from './Footer';
 import Comments from './Comments';
 import ViewComments from './ViewComments';
 
-function Post({ content }) {
+function Post({ content, userId, user }) {
     const { username, caption, imageSrc, docId, comments,
-        likes, dateCreated, isUserlikePhotos
+        likes, dateCreated, isUserLikePhotos
     } = content;
     const inputComment = useRef(null);
-    const [viewComments, setViewComments] = useState(true);
+    const [viewComments, setViewComments] = useState(false);
+
+    useEffect(() => {
+        
+    }, [isUserLikePhotos, viewComments]);
 
     const handleFocus = () => inputComment.current.focus();
 
     return (
         <div class="relative rounded bg-white border border-gray-primary">
             <Header username={username} />
-            <Image caption={caption} src={imageSrc} />
+            <Image caption={caption} docId={docId} src={imageSrc} />
             <Action docId={docId} totalLikes={likes.length}
-                likedPhoto={isUserlikePhotos}
+                likedPhoto={isUserLikePhotos}
                 handleFocus={() => handleFocus()}
             />
-            {viewComments && (
+            {viewComments && content.userId === userId && (
                 <ViewComments content={content} setViewComments={setViewComments}
                     handleFocus={() => handleFocus()}
-                    inputComment={inputComment}
+                    inputComment={inputComment} user={user}
                 />
             )}
             <Footer caption={caption} username={username} />
             <Comments docId={docId} comments={comments}
                 inputComment={inputComment} posted={dateCreated}
+                setViewComments={setViewComments}
+                userId={userId}
             />
         </div>
     )
@@ -50,7 +56,8 @@ Post.propTypes = {
         isUserlikePhotos: PropTypes.bool,
         imageSrc: PropTypes.string.isRequired,
         userId: PropTypes.string.isRequired,
-    })
+    }),
+    user: PropTypes.object
 }
 
 export default Post;

@@ -216,3 +216,10 @@ export async function deleteAllSearchRecent(userId) {
             recent: FieldValue.delete()
         });
 }
+
+export async function getPostByDocId(doc) {
+    const result = await firebaseApp.firestore().collection('photos')
+        .doc(doc).get();
+
+    return result.data();
+}
