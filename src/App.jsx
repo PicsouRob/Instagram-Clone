@@ -44,6 +44,7 @@ const App = () => {
             />
             <Route path="/direct/inbox" element={<Message />} />
             <Route path="/p/:photos" element={<ViewComments />} />
+            <Route path="/p/username" element={<Profile />} />
             <Route path="/explore" element={<Explore />} />
             <Route path="/explore/people" element={<ExploreAll />} />
             <Route path="/accounts/edit" element={<EditAccount />} />
