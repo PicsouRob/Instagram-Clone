@@ -8,7 +8,7 @@ import ProtectedRoute from './helpers/ProtectedRoute';
 import IsUserLoggedIn from './helpers/IsUserLoggedIn';
 import FallBack from './components/FallBack';
 
-const Login = lazy(() => import('./pages/Login'));
+const Login = lazy(() => import('./pages/login'));
 const SignUp = lazy(() => import('./pages/SignUp'));
 const DashBoard = lazy(() => import('./pages/DashBoard'));
 const Profile = lazy(() => import('./pages/Profile'));
