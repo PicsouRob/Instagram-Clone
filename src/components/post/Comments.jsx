@@ -16,7 +16,7 @@ function Comments({ docId, comments: allComments, posted,
 
     return <div class="px-4 text-sm pb-3 pt-1">
         {comments.length >= 3 && (
-            <Link to={`/p/${docId}`} class="text-gray-base cursor-pointer mb-1"
+            <Link to={`/post/${docId}`} class="text-gray-base cursor-pointer mb-1"
                 onClick={() => viewComments()}
             >
                 View all {comments.length} comments

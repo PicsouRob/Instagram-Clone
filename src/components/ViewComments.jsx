@@ -5,26 +5,25 @@ import { useParams } from 'react-router-dom';
 
 import {
     getUserById, isUserFallowingProfile, toggleFallow, getPostByDocId
-} from '../../services/firebase';
-import Footer from './../Footer.jsx';
-import Action from './Action';
-import AddComment from './AddComment';
-import ModalCommentsViews from './ModalCommentsViews';
-import HeaderCommentsView from './HeaderCommentsView';
-import Header from '../headers/Header';
-import UserContext from '../../context/user';
-import { useUser } from '../../hooks/useUser';
+} from '../services/firebase';
+import Footer from './Footer.jsx';
+import Action from './post/Action';
+import AddComment from './post/AddComment';
+import ModalCommentsViews from './post/ModalCommentsViews';
+import HeaderCommentsView from './post/HeaderCommentsView';
+import Header from './headers/Header';
+import UserContext from '../context/user';
+import { useUser } from '../hooks/useUser';
 
 function ViewComments() {
     const [userView, setUserView] = useState({});
     const { photos } = useParams();
     const { user: loggedInUser } = useContext(UserContext);
     const [content, setContent] = useState({});
-    console.log('content', content)
     const { user } = useUser(loggedInUser.uid);
     const { username, avatar, docId: profileDocId } = userView;
     const { docId, likes, isUserLikePhotos, comments: allComments,
-        imageSrc, dateCreated, userId: userProfileId
+        imageSrc, dateCreated, userId: userProfileId, caption
     } = content;
     const [comments, setComments] = useState(allComments);
     const [isFallowingProfile, setIsFallowingProfile] = useState(null);
@@ -49,9 +48,7 @@ function ViewComments() {
             setContent(post);
         }
 
-        if (photos) {
-            getPost();
-        }
+        getPost();
     }, [photos]);
 
     useEffect(() => {
@@ -60,10 +57,10 @@ function ViewComments() {
             setIsFallowingProfile(isFallowing);
         }
 
-        if (user.username && userProfileId) {
+        if (user.username && content) {
             isLoggedUserFallowingProfile();
         }
-    }, [user.username, userProfileId]);
+    }, [user.username, userProfileId, content]);
 
     const handleFallowUser = async () => {
         setIsFallowingProfile((isFallowingProfile) => !isFallowingProfile);
@@ -83,31 +80,36 @@ function ViewComments() {
                 >
                     <div class="col-span-1 overflow-hidden">
                         <div class="flex md:hidden">
-                            <HeaderCommentsView avatar={avatar} username={username}
-                                isFallowingProfile={isFallowingProfile}
-                                handleFallowUser={handleFallowUser}
-                                header
-                            />
+                            {content && (
+                                <HeaderCommentsView avatar={avatar} username={username}
+                                    isFallowingProfile={isFallowingProfile}
+                                    handleFallowUser={handleFallowUser}
+                                    header
+                                />
+                            )}
                         </div>
-                        <img alt="" src={imageSrc}
+                        <img alt="" src={content ? imageSrc : ''}
                             class="w-full object-fill"
                         />
                     </div>
                     <div class="relative text-[#4d4d4d]">
                         <div class="hidden md:flex">
-                            <HeaderCommentsView avatar={avatar} username={username}
-                                isFallowingProfile={isFallowingProfile}
-                                handleFallowUser={handleFallowUser}
-                            />
+                            {content && (
+                                <HeaderCommentsView avatar={avatar} username={username}
+                                    isFallowingProfile={isFallowingProfile}
+                                    handleFallowUser={handleFallowUser}
+                                />
+                            )}
                         </div>
                         <div class="h-[450px] md:h-3/6 px-4 -z-10 py-2 overflow-y-auto">
                             {allComments && (
                                 <ModalCommentsViews docId={docId}
-                                    comments={allComments}
+                                    comments={allComments} avatar={avatar}
+                                    username={username} caption={caption}
                                 />
                             )}
                         </div>
-                        <div class="absolute bottom-0 h-auto z-30 border-t border-gray-primary w-full">
+                        <div class="absolute bottom-0 h-auto z-30 border-t border-gray-primary w-full bg-white">
                             <div class="pt-1 w-full">
                                 {likes && (
                                     <Action docId={docId} totalLikes={likes.length}

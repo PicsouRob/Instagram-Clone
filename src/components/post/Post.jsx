@@ -6,7 +6,6 @@ import Image from './Image';
 import Action from './Action';
 import Footer from './Footer';
 import Comments from './Comments';
-import ViewComments from './ViewComments';
 
 function Post({ content, userId, user }) {
     const { username, caption, imageSrc, docId, comments,
@@ -29,12 +28,6 @@ function Post({ content, userId, user }) {
                 likedPhoto={isUserLikePhotos}
                 handleFocus={() => handleFocus()}
             />
-            {viewComments && content.userId === userId && (
-                <ViewComments content={content} setViewComments={setViewComments}
-                    handleFocus={() => handleFocus()}
-                    inputComment={inputComment} user={user}
-                />
-            )}
             <Footer caption={caption} username={username} />
             <Comments docId={docId} comments={comments}
                 inputComment={inputComment} posted={dateCreated}

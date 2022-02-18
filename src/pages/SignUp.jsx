@@ -13,6 +13,7 @@ function SignUp() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
 
     const isInvalid = email === '' || password === '' || username === '' || fullname === '';
 
@@ -22,45 +23,57 @@ function SignUp() {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+        setIsLoading(true);
 
         const usernameExist = await isUsernameExist(username);
-        if (!usernameExist) {
-            try {
-                const createNewUser = await firebaseApp.auth()
-                    .createUserWithEmailAndPassword(email, password);
-
-                // firebase update profile displayName
-                await createNewUser.user.updateProfile({
-                    displayName: username
-                });
-
-                // firebase collection searchDropdown
-                await firebaseApp.firestore().collection('recent-search')
-                    .add({
-                        userId: createNewUser.user.uid,
-                        recent: [],
-                    });
-
-                // firebase collection users
-                await firebaseApp.firestore().collection('users')
-                    .add({
-                        userId: createNewUser.user.uid,
-                        username: username.toLowerCase(),
-                        fullName: fullname,
-                        emailAddress: email.toLowerCase(),
-                        following: [],
-                        followers: [],
-                        dateCreated: Date.now(),
-                        avatar: '', bio: '', website: '',
-                        phone: '', gender: '', isVerify: false
-                    });
-
-                navigate('/');
-            } catch (error) {
-                setError(error.message);
-            }
+        console.log(usernameExist)
+        if (isInvalid) {
+            setError('All fields is required');
+            setIsLoading(false);
         } else {
-            setError('That username is already taken, please try another.')
+            if (!usernameExist) {
+                try {
+                    const createNewUser = await firebaseApp.auth()
+                        .createUserWithEmailAndPassword(email, password);
+
+                    // firebase update profile displayName
+                    await createNewUser.user.updateProfile({
+                        displayName: username
+                    });
+
+                    // firebase collection searchDropdown
+                    await firebaseApp.firestore().collection('recent-search')
+                        .add({
+                            userId: createNewUser.user.uid,
+                            recent: [],
+                        });
+
+                    // firebase collection users
+                    await firebaseApp.firestore().collection('users')
+                        .add({
+                            userId: createNewUser.user.uid,
+                            username: username.toLowerCase(),
+                            fullName: fullname,
+                            emailAddress: email.toLowerCase(),
+                            following: [],
+                            followers: [],
+                            dateCreated: Date.now(),
+                            avatar: '', bio: '', website: '',
+                            phone: '', gender: '', isVerify: false
+                        });
+
+                    setIsLoading(false);
+                    navigate('/');
+                } catch (error) {
+                    setIsLoading(false);
+                    if (error.message.includes('The email address is badly formatted')) {
+                        setError('Invalid email address');
+                    }
+                }
+            } else {
+                setError('That username is already taken, please try another.');
+                setIsLoading(false);
+            }
         }
     }
 
@@ -86,12 +99,12 @@ function SignUp() {
                         </div>
                     </div>
                     {error && (
-                        <div class="bg-red-100 border border-red-primary text-red-primary text-xs px-4 py-3 mb-3 rounded relative" role="alert">
+                        <div class="bg-red-100 border border-red-primary text-red-primary text-xs px-4 py-3 mb-3 rounded relative w-full flex justify-between bg-[rgba(237,73,86,0.2)]" role="alert">
                             <span class="block sm:inline">{error}</span>
-                            <span class="absolute top-0 bottom-0 right-0 px-4 py-3"
+                            <span class=""
                                 onClick={() => setError('')}
                             >
-                                <svg class="fill-current h-6 w-6 text-red-500" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><title>Close</title><path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z" /></svg>
+                                <svg class="fill-current h-5 w-5 text-red-500" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><title>Close</title><path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z" /></svg>
                             </span>
                         </div>
                     )}
@@ -128,7 +141,9 @@ function SignUp() {
                         <button type="submit"
                             class={`font-bold bg-blue-medium text-white rounded h-8 w-full mt-2 ${isInvalid && `opacity-50`}`}
                         >
-                            Sign Up
+                            {isLoading ? (
+                                <i class="fa fa-spinner fa-spin"></i>
+                            ) : "Sign Up"}
                         </button>
                     </form>
                     <p class="text-xs text-center pt-4">

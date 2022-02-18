@@ -8,7 +8,7 @@ import ProtectedRoute from './helpers/ProtectedRoute';
 import IsUserLoggedIn from './helpers/IsUserLoggedIn';
 import FallBack from './components/FallBack';
 
-const Login = lazy(() => import('./pages/login'));
+const Login = lazy(() => import('./pages/Login'));
 const SignUp = lazy(() => import('./pages/SignUp'));
 const DashBoard = lazy(() => import('./pages/DashBoard'));
 const Profile = lazy(() => import('./pages/Profile'));
@@ -17,7 +17,7 @@ const Explore = lazy(() => import('./pages/Explore'));
 const ExploreAll = lazy(() => import('./pages/ExploreAll'));
 const Message = lazy(() => import('./pages/Message'));
 const EditAccount = lazy(() => import('./pages/EditAccount'));
-const ViewComments = lazy(() => import('./components/post/ViewComments'));
+const ViewComments = lazy(() => import('./components/ViewComments'));
 
 const App = () => {
   const { user } = useAuthListener();
@@ -43,8 +43,8 @@ const App = () => {
               </IsUserLoggedIn>}
             />
             <Route path="/direct/inbox" element={<Message />} />
-            <Route path="/p/:photos" element={<ViewComments />} />
-            <Route path="/p/username" element={<Profile />} />
+            <Route path="/post/:photos" element={<ViewComments />} />
+            <Route path="/p/:username" element={<Profile />} />
             <Route path="/explore" element={<Explore />} />
             <Route path="/explore/people" element={<ExploreAll />} />
             <Route path="/accounts/edit" element={<EditAccount />} />

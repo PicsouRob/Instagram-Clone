@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 function Image({ src, caption, docId }) {
-    return <Link to={`/p/${docId}`}>
+    return <Link to={`/post/${docId}`}>
         <img alt={caption} src={src} />
     </Link>;
 }

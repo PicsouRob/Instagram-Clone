@@ -17,7 +17,7 @@ function HeaderCommentsView({ avatar, username, isFallowingProfile, handleFallow
                     )}
                     <div class="flex items-center gap-x-[8px]">
                         <p class="font-bold text-sm">{username}</p>
-                        <strong>&#46;</strong>
+                        <strong class="mb-2">&#46;</strong>
                         <button class={`${!isFallowingProfile && "text-blue-medium"} text-[12px] font-bold`}
                             onClick={() => handleFallowUser()}
                         >

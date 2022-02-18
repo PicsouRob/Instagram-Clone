@@ -10,6 +10,7 @@ function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
 
     const isInvalid = email === '' || password === '';
 
@@ -19,12 +20,21 @@ function Login() {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+        setIsLoading(true);
 
         try {
             await firebaseApp.auth().signInWithEmailAndPassword(email, password);
             navigate('/');
+            setIsLoading(false);
         } catch (error) {
-            setError(error.message);
+            setIsLoading(false);
+            if (error.message.includes('The email address is badly formatted')) {
+                setError('Email and password is required');
+            } else if (error.message.includes('There is no user record')) {
+                setError('There are no user with this email')
+            } else {
+                setError('Invalid password');
+            }
         }
     }
 
@@ -39,12 +49,12 @@ function Login() {
                         <img alt="" src="/images/logo.png" class="w-6/12 mb-4 mt-2" />
                     </h1>
                     {error && (
-                        <div class="bg-red-100 border border-red-primary text-red-primary text-xs px-4 py-3 mb-3 rounded relative" role="alert">
+                        <div class="bg-red-100 border border-red-primary text-red-primary text-xs px-2 py-3 mb-3 rounded relative w-full flex justify-between bg-[rgba(237,73,86,0.2)]" role="alert">
                             <span class="block sm:inline">{error}</span>
-                            <span class="absolute top-0 bottom-0 right-0 px-4 py-3"
+                            <span class=""
                                 onClick={() => setError('')}
                             >
-                                <svg class="fill-current h-6 w-6 text-red-500" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><title>Close</title><path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z" /></svg>
+                                <svg class="fill-current h-4 w-4 text-red-500" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><title>Close</title><path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z" /></svg>
                             </span>
                         </div>
                     )}
@@ -65,7 +75,9 @@ function Login() {
                         <button type="submit"
                             class={`font-bold bg-blue-medium text-white rounded h-8 w-full mt-2 ${isInvalid && `opacity-50`}`}
                         >
-                            Log In
+                            {isLoading ? (
+                                <i class="fa fa-spinner fa-spin"></i>
+                            ) : "Log In"}
                         </button>
                     </form>
                     <div class="flex flex-col items-center justify-center gap-y-4 mt-4 w-full">
